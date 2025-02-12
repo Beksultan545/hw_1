@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Threads{% endblock %}
+{% block content %}
+<h2>Threads</h2>
+
+<button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addThreadModal">+ Add Thread</button>
+
+<ul class="list-group">
+    {% for thread in threads %}
+    <li class="list-group-item">
+        <a href="{% url 'thread_detail' thread.id %}">{{ thread.name }}</a>
+        <a href="{% url 'thread_delete' thread.id %}" class="btn btn-danger btn-sm float-end">Delete</a>
+        <a href="{% url 'thread_edit' thread.id %}" class="btn btn-warning btn-sm float-end me-2">Edit</a>
+    </li>
+    {% endfor %}
+</ul>
+
+<div class="modal fade" id="addThreadModal" tabindex="-1" aria-labelledby="addThreadModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addThreadModalLabel">New Thread</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="post" action="{% url 'thread_create' %}">
+        <div class="modal-body">
+            {% csrf_token %}
+            <label>Name:</label>
+            <input type="text" name="name" class="form-control" required>
+            <label>Description:</label>
+            <textarea name="description" class="form-control" required></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

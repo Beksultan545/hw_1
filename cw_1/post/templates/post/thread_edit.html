@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Edit Thread{% endblock %}
+{% block content %}
+<h2>Edit Thread</h2>
+<form method="post">
+    {% csrf_token %}
+    <label>Name:</label>
+    <input type="text" name="name" value="{{ thread.name }}" class="form-control" required>
+    <label>Description:</label>
+    <textarea name="description" class="form-control" required>{{ thread.description }}</textarea>
+    <button type="submit" class="btn btn-primary mt-3">Save</button>
+</form>
+{% endblock %}
